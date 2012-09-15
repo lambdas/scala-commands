@@ -1,4 +1,4 @@
-package org.zenmode.cmd
+package org.zenmode.cmd.executor
 
 import org.scalatest.{ParallelTestExecution, FunSuite}
 import org.scalatest.matchers.ShouldMatchers
@@ -9,28 +9,28 @@ class LocalExecutorSuite extends FunSuite with ShouldMatchers with ParallelTestE
 
   test("Success exit code") {
     val result = executor.execute("ls")
-    result.succeeded should be (true)
+    result.succeeded should be(true)
   }
 
   test("Error exit code") {
     val result = executor.execute("ls", Seq("nonExistingDir"))
-    result.failed should be (true)
+    result.failed should be(true)
   }
 
   test("Stdout") {
     val result = executor.execute("expr", Seq("1", "+", "2"))
-    result.stdoutAsString should be ("3")
+    result.stdoutAsString should be("3")
   }
 
   test("Stderr") {
     val result = executor.execute("ls", Seq("nonExistingDir"))
-    result.stderrAsString should include ("No such file or directory")
+    result.stderrAsString should include("No such file or directory")
   }
 
   test("Work directory") {
     var workDir = "/usr/bin"
     val result = executor.execute("pwd", Nil, workDir)
-    result.stdoutAsString should include (workDir)
+    result.stdoutAsString should include(workDir)
   }
 
   test("Environment variables") {
@@ -38,6 +38,6 @@ class LocalExecutorSuite extends FunSuite with ShouldMatchers with ParallelTestE
     var varValue = "Test value"
     val env = Map(varName -> varValue)
     val result = executor.execute("env", Nil, LocalExecutor.currentDir, env)
-    result.stdoutAsString should include ("%s=%s" format (varName, varValue))
+    result.stdoutAsString should include("%s=%s" format(varName, varValue))
   }
 }

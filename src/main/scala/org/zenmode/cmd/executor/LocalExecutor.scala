@@ -1,17 +1,18 @@
-package org.zenmode.cmd
+package org.zenmode.cmd.executor
 
 import sys.process.Process
 import java.io.File
-import util.SimpleProcessLogger
+import org.zenmode.cmd.util.SimpleProcessLogger
+import org.zenmode.cmd.result.SimpleResult
 
-class LocalExecutor {
-  def execute(
+class LocalExecutor extends Executor {
+  override def execute(
     appPath: String,
-    args:    Iterable[String] = Nil,
+    args: Iterable[String] = Nil,
     workDir: String = LocalExecutor.currentDir,
-    env:     Iterable[(String, String)] = Nil) = {
-
-    val logger   = new SimpleProcessLogger
+    env: Iterable[(String, String)] = Nil
+  ) = {
+    val logger = new SimpleProcessLogger
     val process = Process(
       appPath :: args.toList,
       new File(workDir),
