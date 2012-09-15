@@ -3,7 +3,7 @@ package org.zenmode.cmd.executor
 import sys.process.Process
 import java.io.File
 import org.zenmode.cmd.util.SimpleProcessLogger
-import org.zenmode.cmd.result.SimpleResult
+import org.zenmode.cmd.result.SingleResult
 
 class LocalExecutor extends Executor {
   override def execute(
@@ -19,7 +19,7 @@ class LocalExecutor extends Executor {
       env.toSeq: _*)
     val exitCode = process ! logger
 
-    SimpleResult(exitCode, logger.stdout, logger.stderr)
+    SingleResult(exitCode, logger.stdout, logger.stderr)
   }
 }
 

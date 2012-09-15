@@ -4,7 +4,7 @@ import org.scalatest.{ParallelTestExecution, FunSuite}
 import org.scalatest.matchers.ShouldMatchers
 import org.mockito.Mockito._
 import org.zenmode.cmd.executor.Executor
-import org.zenmode.cmd.result.SimpleResult
+import org.zenmode.cmd.result.SingleResult
 
 class CommandSequenceSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
 
@@ -23,9 +23,9 @@ class CommandSequenceSuite extends FunSuite with ShouldMatchers with ParallelTes
     order.verify(executor).execute("cd", Nil, ".", Map.empty)
   }
 
-  test("Separate exit codes") {
-    val firstResult = SimpleResult(0, "First output", "First errors")
-    val secondResult = SimpleResult(-1, "Second output", "Second result")
+  test("Separate results") {
+    val firstResult = SingleResult(0, "First output", "First errors")
+    val secondResult = SingleResult(-1, "Second output", "Second result")
 
     when(executor.execute("ls", Nil, ".", Map.empty)).thenReturn(firstResult)
     when(executor.execute("cd", Nil, ".", Map.empty)).thenReturn(secondResult)

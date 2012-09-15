@@ -1,6 +1,10 @@
 package org.zenmode.cmd.result
 
+import ExitCodes._
+
 trait ResultBase extends Result {
+
+  def succeeded = exitCode == success
 
   def failed = !succeeded
 

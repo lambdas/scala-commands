@@ -1,11 +1,15 @@
 package org.zenmode.cmd.result
 
+import ExitCodes._
+
 case class ResultSequence(results: Iterable[Result]) extends ResultBase {
-  def exitCode = 0
+  override lazy val exitCode =
+    if (results.map(_.exitCode).forall(success ==))
+      success
+    else
+      fail
 
-  def stdout = null
+  override lazy val stdout = results.flatMap(_.stdout)
 
-  def stderr = null
-
-  def succeeded = false
+  override lazy val stderr = results.flatMap(_.stderr)
 }
