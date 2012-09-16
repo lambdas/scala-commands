@@ -10,8 +10,8 @@ class CommandSequenceSuite extends FunSuite with ShouldMatchers with ParallelTes
 
   implicit val executor = mock(classOf[Executor])
 
-  val firstCmd = Command("ls")
-  val secondCmd = Command("cd")
+  val firstCmd = Command("ls") withUnexecute Command("unls")
+  val secondCmd = Command("cd") withUnexecute Command("uncd")
   val cmdSeq = CommandSequence(firstCmd, secondCmd)
 
   test("Execution in order") {
@@ -33,5 +33,14 @@ class CommandSequenceSuite extends FunSuite with ShouldMatchers with ParallelTes
     val seqResult = cmdSeq.execute
 
     seqResult.results should equal (Seq(firstResult, secondResult))
+  }
+
+  test("Should unexecute commands in reverse order") {
+    val order = inOrder(executor)
+
+    cmdSeq.unexecute
+
+    order.verify(executor).execute("uncd", Nil, ".", Map.empty)
+    order.verify(executor).execute("unls", Nil, ".", Map.empty)
   }
 }

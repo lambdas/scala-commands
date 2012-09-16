@@ -8,6 +8,12 @@ class CommandSequence(cmds: Executable*) extends Executable {
     val results = cmds map (_.execute)
     ResultSequence(results)
   }
+
+  def unexecute(implicit executor: Executor) =
+    Some(ResultSequence(unexecuteInReverse))
+
+  private def unexecuteInReverse(implicit executor: Executor) =
+    cmds.reverse.flatMap(_.unexecute)
 }
 
 object CommandSequence {

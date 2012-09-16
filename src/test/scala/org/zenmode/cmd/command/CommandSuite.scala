@@ -7,6 +7,8 @@ import org.zenmode.cmd.executor.Executor
 
 class CommandSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
 
+  implicit val executor = mock(classOf[Executor])
+
   test("With arguments") {
     val cmd = Command("ls", Seq("-l")) withArgs Seq("-a", "/usr/bin")
     cmd.args should equal(Seq("-l", "-a", "/usr/bin"))
@@ -23,16 +25,32 @@ class CommandSuite extends FunSuite with ShouldMatchers with ParallelTestExecuti
   }
 
   test("With environment") {
-    val cmd = Command("ls", env = Map("SOME_FLAG" -> "Some value")) withEnv Map("ANOTHER_FLAG" -> "Another value")
+    val cmd = Command("ls", env = Map("SOME_FLAG" -> "Some value")) withEnv
+      Map("ANOTHER_FLAG" -> "Another value")
     cmd.env should equal(Map("SOME_FLAG" -> "Some value", "ANOTHER_FLAG" -> "Another value"))
   }
 
+  test("With unexecute") {
+    val unCmd = Command("rmdir") withArg "temp"
+    val cmd = Command("mkdir") withArg "temp" withUnexecute unCmd
+
+    cmd.unexecuteCmd should equal (Some(unCmd))
+  }
+
   test("Executing") {
-    implicit val executor = mock(classOf[Executor])
     val cmd = Command("pwd") inDir "/usr/bin" withArg "-P"
 
     cmd.execute
 
     verify(executor).execute("pwd", Seq("-P"), "/usr/bin", Map.empty)
+  }
+
+  test("Unexecuting") {
+    val unCmd = Command("rmdir") withArg "temp"
+    val cmd = Command("mkdir") withArg "temp" withUnexecute unCmd
+
+    cmd.unexecute
+
+    verify(executor).execute("rmdir", Seq("temp"), ".", Map.empty)
   }
 }

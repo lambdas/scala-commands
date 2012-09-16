@@ -5,4 +5,5 @@ import org.zenmode.cmd.result.Result
 
 trait Executable {
   def execute(implicit executor: Executor): Result
+  def unexecute(implicit executor: Executor): Option[Result]
 }
