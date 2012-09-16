@@ -37,9 +37,9 @@ Usually you will execute several commands in a row. In such cases you may want t
 
 **Scala Commands** contains different command sequences:
 
-* CmdSeq - Just plain sequence. Executes your commands one by one no matter what.
-* FailFastCmdSeq - As one above, but stops execution if one of commands returns error code. Most times this is what you want.
-* CmdTransaction - The most complicated yet most powerful sequence, will roll changes back if one of the commands fails.
+* **CmdSeq** - Just plain sequence. Executes your commands one by one no matter what.
+* **FailFastCmdSeq** - As one above, but stops execution if one of commands returns error code. Most times this is what you want.
+* **CmdTransaction** - The most complicated yet most powerful sequence, will roll changes back if one of the commands fails.
 
 Using it is simple and fun:
 
