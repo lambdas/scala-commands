@@ -10,7 +10,7 @@ Coming soon.
 
 ## Single command execution
 
-Easiest part, just tell **Scala Commands** what your command is:
+The easiest part, just tell **Scala Commands** what your command is:
 
     import org.zenmode.cmd.executor.LocalExecutor
     import org.zenmode.cmd.command.Cmd
