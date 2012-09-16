@@ -12,6 +12,7 @@ Coming soon.
 
 The easiest part, just tell **Scala Commands** what your command is:
 
+```scala
     import org.zenmode.cmd.executor.LocalExecutor
     import org.zenmode.cmd.command.Cmd
 
@@ -28,10 +29,11 @@ The easiest part, just tell **Scala Commands** what your command is:
     println(res.exitCode)
     println(res.stdoutAsString)
     println(res.stderrAsString)
+```
 
 ## Combining commands in sequences
 
-Usually you will execute several commands in row. In such cases you may want to combine your commands in to single entity, for easy management.
+Usually you will execute several commands in a row. In such cases you may want to combine your commands in to single entity, for easy management.
 
 **Scala Commands** contains different command sequences:
 
