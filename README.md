@@ -112,7 +112,7 @@ results.map { result =>
 
 ## Remote executing
 
-**Scala Commands** could execute your commands through SSH transparently, just change executor!
+**Scala Commands** could execute your commands through **SSH** transparently, just change executor!
 
 ```scala
 import org.zenmode.cmd.executor.SSHExecutor
@@ -134,3 +134,11 @@ val docIveForgot = res.stdoutAsString
 ## And there is more
 
 Stay tuned.
+
+## Maintainers
+
+* Logvinov Pavel <paul-mail@yandex.ru>
+
+## Contributors
+
+* You can be the one of
