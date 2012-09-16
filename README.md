@@ -13,22 +13,22 @@ Coming soon.
 The easiest part, just tell **Scala Commands** what your command is:
 
 ```scala
-    import org.zenmode.cmd.executor.LocalExecutor
-    import org.zenmode.cmd.command.Cmd
+import org.zenmode.cmd.executor.LocalExecutor
+import org.zenmode.cmd.command.Cmd
 
-    // Local executor sends commands to local shell
-    implicit val executor = new LocalExecutor
+// Local executor sends commands to local shell
+implicit val executor = new LocalExecutor
 
-    // Define your awesome command
-    val ls = Cmd("ls") withArg "-la" inDir "/usr/bin"
+// Define your awesome command
+val ls = Cmd("ls") withArg "-la" inDir "/usr/bin"
 
-    // Execute it
-    val res = ls.execute
+// Execute it
+val res = ls.execute
 
-    // Enjoy results
-    println(res.exitCode)
-    println(res.stdoutAsString)
-    println(res.stderrAsString)
+// Enjoy results
+println(res.exitCode)
+println(res.stdoutAsString)
+println(res.stderrAsString)
 ```
 
 ## Combining commands in sequences
@@ -44,22 +44,22 @@ Usually you will execute several commands in a row. In such cases you may want t
 Using it is simple and fun:
 
 ```scala
-    import org.zenmode.cmd.command.{Cmd, FailFastCmdSeq}
+import org.zenmode.cmd.command.{Cmd, FailFastCmdSeq}
 
-    // Local executor sends commands to local shell
-    implicit val executor = new LocalExecutor
+// Local executor sends commands to local shell
+implicit val executor = new LocalExecutor
 
-    // Define scommand equence
-    val prepareHomeStructure =
-      FailFastCmdSeq(
-        Cmd("mkdir") withArg "/home/paul",
-        Cmd("mkdir") withArg "Books"  inDir "/home/paul",
-        Cmd("mkdir") withArg "Music"  inDir "/home/paul",
-        Cmd("touch") withArg "Readme" inDir "/home/paul"
-      )
+// Define scommand equence
+val prepareHomeStructure =
+  FailFastCmdSeq(
+    Cmd("mkdir") withArg "/home/paul",
+    Cmd("mkdir") withArg "Books"  inDir "/home/paul",
+    Cmd("mkdir") withArg "Music"  inDir "/home/paul",
+    Cmd("touch") withArg "Readme" inDir "/home/paul"
+  )
 
-    // All ready for execution
-    prepareHomeStructure.execute
+// All ready for execution
+prepareHomeStructure.execute
 ```
 
 ## Collecting results
@@ -67,47 +67,47 @@ Using it is simple and fun:
 **Scala Commands** carefully collects results of all your commands, so you could fully manage execution flow. After command or sequence executed, library provides you with a `Result` instance. Let's inspect it:
 
 ```scala
-    // Executing some command
-    val result = cmd.execute
+// Executing some command
+val result = cmd.execute
 
-    // Easy way to check success
-    if (result.succeeded)
-      println("Ok")
+// Easy way to check success
+if (result.succeeded)
+  println("Ok")
 
-    // Or handle failure
-    if (result.failed)
-      println("Failed")
+// Or handle failure
+if (result.failed)
+  println("Failed")
 
-    // You can easily access original command exit code
-    val exitCode = result.exitCode
+// You can easily access original command exit code
+val exitCode = result.exitCode
 
-    // Command output as string
-    val out = result.stdoutAsString
+// Command output as string
+val out = result.stdoutAsString
 
-    // And even as raw bytes!
-    val bytes = result.stdout
+// And even as raw bytes!
+val bytes = result.stdout
 
-    // Errors goes to stderr
-    val errors = result.stderrAsString
+// Errors goes to stderr
+val errors = result.stderrAsString
 ```
 
 After sequence executed, you got `ResultSeq` which contains results from each of commands, unbelievable!
 
 ```scala
-    // Executing some sequence
-    val results = seq.execute
+// Executing some sequence
+val results = seq.execute
 
-    // Is our sequence succeeded?
-    if (results.succeeded) {
-      // Of course it does
-    }
+// Is our sequence succeeded?
+if (results.succeeded) {
+  // Of course it does
+}
 
-    // Inspecting each of results
-    results.map { result =>
-      val exitCode = result.exitCode
-      val out      = result.stdoutAsString
-      val errors   = result.stderrAsString
-    }
+// Inspecting each of results
+results.map { result =>
+  val exitCode = result.exitCode
+  val out      = result.stdoutAsString
+  val errors   = result.stderrAsString
+}
 ```
 
 ## Remote executing
@@ -115,20 +115,20 @@ After sequence executed, you got `ResultSeq` which contains results from each of
 **Scala Commands** could execute your commands through SSH transparently, just change executor!
 
 ```scala
-    import org.zenmode.cmd.executor.SSHExecutor
-    import org.zenmode.cmd.command.Cmd
+import org.zenmode.cmd.executor.SSHExecutor
+import org.zenmode.cmd.command.Cmd
 
-    // As easy as change one line
-    implicit val executor = new SSHExecutor("my-pc.at-work.com", "paul", "password")
+// As easy as change one line
+implicit val executor = new SSHExecutor("my-pc.at-work.com", "paul", "password")
 
-    // And
-    val retrieveForgottenDoc = Cmd("cat") withArg "prices.xml" inDir "/home/paul/Documents"
+// And
+val retrieveForgottenDoc = Cmd("cat") withArg "prices.xml" inDir "/home/paul/Documents"
 
-    // Your commands executes on remote host automatically
-    val res = retrieveForgottenDoc.execute
+// Your commands executes on remote host automatically
+val res = retrieveForgottenDoc.execute
 
-    // Pure magic!
-    val docIveForgot = res.stdoutAsString
+// Pure magic!
+val docIveForgot = res.stdoutAsString
 ```
 
 ## And there is more
