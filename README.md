@@ -58,7 +58,7 @@ val prepareHomeStructure =
     Cmd("touch") withArg "Readme" inDir "/home/paul"
   )
 
-// All ready for execution
+// All is ready for execution
 prepareHomeStructure.execute
 ```
 
@@ -67,7 +67,7 @@ prepareHomeStructure.execute
 **Scala Commands** carefully collects results of all your commands, so you could fully manage execution flow. After command or sequence executed, library provides you with a `Result` instance. Let's inspect it:
 
 ```scala
-// Executing some command
+// Execute some command
 val result = cmd.execute
 
 // Easy way to check success
@@ -94,7 +94,7 @@ val errors = result.stderrAsString
 After sequence executed, you got `ResultSeq` which contains results from each of commands, unbelievable!
 
 ```scala
-// Executing some sequence
+// Execute some sequence
 val results = seq.execute
 
 // Is our sequence succeeded?
@@ -102,7 +102,7 @@ if (results.succeeded) {
   // Of course it does
 }
 
-// Inspecting each of results
+// Inspect each of results
 results.map { result =>
   val exitCode = result.exitCode
   val out      = result.stdoutAsString
