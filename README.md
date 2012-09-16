@@ -48,9 +48,9 @@ Using it is simple and fun:
     val prepareHomeStructure =
       FailFastCmdSeq(
         Cmd("mkdir") withArg "/home/paul",
-        Cmd("mkdir") withArg "Books" inDir "/home/paul",
-        Cmd("mkdir") withArg "Music" inDir "/home/paul",
-        Cmd("touch") withArg "Readme"
+        Cmd("mkdir") withArg "Books"  inDir "/home/paul",
+        Cmd("mkdir") withArg "Music"  inDir "/home/paul",
+        Cmd("touch") withArg "Readme" inDir "/home/paul"
       )
 
     # All ready for execution
