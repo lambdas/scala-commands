@@ -117,7 +117,7 @@ Scala Commands could execute your commands through SSH transparently, just chang
     val res = retrieveForgottenDoc.execute
 
     # Pure magic!
-    val docIveForgot = res.stdoutAsStringa
+    val docIveForgot = res.stdoutAsString
 
 ## And there is more
 
