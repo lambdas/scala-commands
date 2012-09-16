@@ -31,7 +31,7 @@ Coming soon.
 
 Usually you will execute several commands in row. In such cases you may want to combine your commands in to single entity, for easy management.
 
-Scala Commands contains different command sequences:
+**Scala Commands** contains different command sequences:
 
 * CmdSeq - Just plain sequence. Executes your commands one by one no matter what.
 * FailFastCmdSeq - As one above, but stops execution if one of commands returns error code. Most times this is what you want.
@@ -58,7 +58,7 @@ Using it is simple and fun:
 
 ## Collecting results
 
-Scala Commands carefully collects results of all your commands, so you could fully manage execution flow. After command or sequence executed, library provides you with a `Result` instance. Let's inspect it:
+**Scala Commands** carefully collects results of all your commands, so you could fully manage execution flow. After command or sequence executed, library provides you with a `Result` instance. Let's inspect it:
 
     # Executing some command
     val result = cmd.execute
@@ -102,7 +102,7 @@ After sequence executed, you got `ResultSeq` which contains results from each of
 
 ## Remote executing
 
-Scala Commands could execute your commands through SSH transparently, just change executor!
+**Scala Commands** could execute your commands through SSH transparently, just change executor!
 
     import org.zenmode.cmd.executor.SSHExecutor
     import org.zenmode.cmd.command.Cmd
