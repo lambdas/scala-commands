@@ -16,16 +16,16 @@ The easiest part, just tell **Scala Commands** what your command is:
     import org.zenmode.cmd.executor.LocalExecutor
     import org.zenmode.cmd.command.Cmd
 
-    # Local executor sends commands to local shell
+    // Local executor sends commands to local shell
     implicit val executor = new LocalExecutor
 
-    # Define your awesome command
+    // Define your awesome command
     val ls = Cmd("ls") withArg "-la" inDir "/usr/bin"
 
-    # Execute it
+    // Execute it
     val res = ls.execute
 
-    # Enjoy results
+    // Enjoy results
     println(res.exitCode)
     println(res.stdoutAsString)
     println(res.stderrAsString)
@@ -46,10 +46,10 @@ Using it is simple and fun:
 ```scala
     import org.zenmode.cmd.command.{Cmd, FailFastCmdSeq}
 
-    # Local executor sends commands to local shell
+    // Local executor sends commands to local shell
     implicit val executor = new LocalExecutor
 
-    # Define scommand equence
+    // Define scommand equence
     val prepareHomeStructure =
       FailFastCmdSeq(
         Cmd("mkdir") withArg "/home/paul",
@@ -58,7 +58,7 @@ Using it is simple and fun:
         Cmd("touch") withArg "Readme" inDir "/home/paul"
       )
 
-    # All ready for execution
+    // All ready for execution
     prepareHomeStructure.execute
 ```
 
@@ -67,42 +67,42 @@ Using it is simple and fun:
 **Scala Commands** carefully collects results of all your commands, so you could fully manage execution flow. After command or sequence executed, library provides you with a `Result` instance. Let's inspect it:
 
 ```scala
-    # Executing some command
+    // Executing some command
     val result = cmd.execute
 
-    # Easy way to check success
+    // Easy way to check success
     if (result.succeeded)
       println("Ok")
 
-    # Or handle failure
+    // Or handle failure
     if (result.failed)
       println("Failed")
 
-    # You can easily access original command exit code
+    // You can easily access original command exit code
     val exitCode = result.exitCode
 
-    # Command output as string
+    // Command output as string
     val out = result.stdoutAsString
 
-    # And even as raw bytes!
+    // And even as raw bytes!
     val bytes = result.stdout
 
-    # Errors goes to stderr
+    // Errors goes to stderr
     val errors = result.stderrAsString
 ```
 
 After sequence executed, you got `ResultSeq` which contains results from each of commands, unbelievable!
 
 ```scala
-    # Executing some sequence
+    // Executing some sequence
     val results = seq.execute
 
-    # Is our sequence succeeded?
+    // Is our sequence succeeded?
     if (results.succeeded) {
-      # Of course it does
+      // Of course it does
     }
 
-    # Inspecting each of results
+    // Inspecting each of results
     results.map { result =>
       val exitCode = result.exitCode
       val out      = result.stdoutAsString
@@ -118,16 +118,16 @@ After sequence executed, you got `ResultSeq` which contains results from each of
     import org.zenmode.cmd.executor.SSHExecutor
     import org.zenmode.cmd.command.Cmd
 
-    # As easy as change one line
+    // As easy as change one line
     implicit val executor = new SSHExecutor("my-pc.at-work.com", "paul", "password")
 
-    # And
+    // And
     val retrieveForgottenDoc = Cmd("cat") withArg "prices.xml" inDir "/home/paul/Documents"
 
-    # Your commands executes on remote host automatically
+    // Your commands executes on remote host automatically
     val res = retrieveForgottenDoc.execute
 
-    # Pure magic!
+    // Pure magic!
     val docIveForgot = res.stdoutAsString
 ```
 
