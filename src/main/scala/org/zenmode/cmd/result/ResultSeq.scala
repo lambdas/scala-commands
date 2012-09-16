@@ -2,7 +2,7 @@ package org.zenmode.cmd.result
 
 import ExitCodes._
 
-case class ResultSequence(results: Iterable[Result]) extends ResultBase {
+case class ResultSeq(results: Iterable[Result]) extends ResultBase {
 
   override lazy val exitCode =
     if (allResultsSucceeded)

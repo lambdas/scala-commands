@@ -6,13 +6,13 @@ import org.mockito.Mockito._
 import org.zenmode.cmd.executor.Executor
 import org.zenmode.cmd.result.SingleResult
 
-class FailFastCommandSequenceSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
+class FailFastCmdSeqSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
 
   private implicit val executor = mock(classOf[Executor])
 
-  private val firstCmd = Command("ls")
-  private val secondCmd = Command("cd")
-  private val cmdSeq = FailFastCommandSequence(firstCmd, secondCmd)
+  private val firstCmd = Cmd("ls")
+  private val secondCmd = Cmd("cd")
+  private val cmdSeq = FailFastCmdSeq(firstCmd, secondCmd)
   private val successResult = SingleResult(0, "First output", "First errors")
   private val failResult = SingleResult(-1, "Second output", "Second result")
 

@@ -6,14 +6,14 @@ import org.mockito.Mockito._
 import org.zenmode.cmd.executor.Executor
 import org.zenmode.cmd.result.SingleResult
 
-class CommandTransactionSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
+class CmdTransactionSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
 
   private implicit val executor = mock(classOf[Executor])
 
-  private val firstCmd = Command("ls")
-  private val secondUnCmd = Command("rmdir") withArg "test"
-  private val secondCmd = Command("mkdir") withArg "test" withUnexecute secondUnCmd
-  private val transaction = CommandTransaction(secondCmd, firstCmd)
+  private val firstCmd = Cmd("ls")
+  private val secondUnCmd = Cmd("rmdir") withArg "test"
+  private val secondCmd = Cmd("mkdir") withArg "test" withUnexecute secondUnCmd
+  private val transaction = CmdTransaction(secondCmd, firstCmd)
   private val successResult = SingleResult(0, "First output", "First errors")
   private val failResult = SingleResult(-1, "Second output", "Second result")
 

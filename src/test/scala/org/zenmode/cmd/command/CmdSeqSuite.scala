@@ -6,13 +6,13 @@ import org.mockito.Mockito._
 import org.zenmode.cmd.executor.Executor
 import org.zenmode.cmd.result.SingleResult
 
-class CommandSequenceSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
+class CmdSeqSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
 
   implicit val executor = mock(classOf[Executor])
 
-  val firstCmd = Command("ls") withUnexecute Command("unls")
-  val secondCmd = Command("cd") withUnexecute Command("uncd")
-  val cmdSeq = CommandSequence(firstCmd, secondCmd)
+  val firstCmd = Cmd("ls") withUnexecute Cmd("unls")
+  val secondCmd = Cmd("cd") withUnexecute Cmd("uncd")
+  val cmdSeq = CmdSeq(firstCmd, secondCmd)
 
   test("Execution in order") {
     val order = inOrder(executor)

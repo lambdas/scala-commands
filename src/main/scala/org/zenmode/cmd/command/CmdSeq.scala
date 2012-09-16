@@ -1,21 +1,21 @@
 package org.zenmode.cmd.command
 
 import org.zenmode.cmd.executor.Executor
-import org.zenmode.cmd.result.ResultSequence
+import org.zenmode.cmd.result.ResultSeq
 
-class CommandSequence(cmds: Executable*) extends Executable {
+class CmdSeq(cmds: Executable*) extends Executable {
   def execute(implicit executor: Executor) = {
     val results = cmds map (_.execute)
-    ResultSequence(results)
+    ResultSeq(results)
   }
 
   def unexecute(implicit executor: Executor) =
-    Some(ResultSequence(unexecuteInReverse))
+    Some(ResultSeq(unexecuteInReverse))
 
   private def unexecuteInReverse(implicit executor: Executor) =
     cmds.reverse.flatMap(_.unexecute)
 }
 
-object CommandSequence {
-  def apply(cmds: Executable*): CommandSequence = new CommandSequence(cmds: _*)
+object CmdSeq {
+  def apply(cmds: Executable*): CmdSeq = new CmdSeq(cmds: _*)
 }

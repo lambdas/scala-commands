@@ -5,40 +5,40 @@ import org.scalatest.matchers.ShouldMatchers
 import org.mockito.Mockito._
 import org.zenmode.cmd.executor.Executor
 
-class CommandSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
+class CmdSuite extends FunSuite with ShouldMatchers with ParallelTestExecution {
 
   implicit val executor = mock(classOf[Executor])
 
   test("With arguments") {
-    val cmd = Command("ls", Seq("-l")) withArgs Seq("-a", "/usr/bin")
+    val cmd = Cmd("ls", Seq("-l")) withArgs Seq("-a", "/usr/bin")
     cmd.args should equal(Seq("-l", "-a", "/usr/bin"))
   }
 
   test("With argument") {
-    val cmd = Command("ls", Seq("-l")) withArg "/usr/bin"
+    val cmd = Cmd("ls", Seq("-l")) withArg "/usr/bin"
     cmd.args should equal(Seq("-l", "/usr/bin"))
   }
 
   test("In directory") {
-    val cmd = Command("ls") inDir "/usr/bin"
+    val cmd = Cmd("ls") inDir "/usr/bin"
     cmd.workDir should equal("/usr/bin")
   }
 
   test("With environment") {
-    val cmd = Command("ls", env = Map("SOME_FLAG" -> "Some value")) withEnv
+    val cmd = Cmd("ls", env = Map("SOME_FLAG" -> "Some value")) withEnv
       Map("ANOTHER_FLAG" -> "Another value")
     cmd.env should equal(Map("SOME_FLAG" -> "Some value", "ANOTHER_FLAG" -> "Another value"))
   }
 
   test("With unexecute") {
-    val unCmd = Command("rmdir") withArg "temp"
-    val cmd = Command("mkdir") withArg "temp" withUnexecute unCmd
+    val unCmd = Cmd("rmdir") withArg "temp"
+    val cmd = Cmd("mkdir") withArg "temp" withUnexecute unCmd
 
     cmd.unexecuteCmd should equal (Some(unCmd))
   }
 
   test("Executing") {
-    val cmd = Command("pwd") inDir "/usr/bin" withArg "-P"
+    val cmd = Cmd("pwd") inDir "/usr/bin" withArg "-P"
 
     cmd.execute
 
@@ -46,8 +46,8 @@ class CommandSuite extends FunSuite with ShouldMatchers with ParallelTestExecuti
   }
 
   test("Unexecuting") {
-    val unCmd = Command("rmdir") withArg "temp"
-    val cmd = Command("mkdir") withArg "temp" withUnexecute unCmd
+    val unCmd = Cmd("rmdir") withArg "temp"
+    val cmd = Cmd("mkdir") withArg "temp" withUnexecute unCmd
 
     cmd.unexecute
 

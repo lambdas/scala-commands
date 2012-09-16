@@ -1,26 +1,26 @@
 package org.zenmode.cmd.command
 
 import org.zenmode.cmd.executor.Executor
-import org.zenmode.cmd.result.{Result, ResultSequence}
+import org.zenmode.cmd.result.{Result, ResultSeq}
 
-class CommandTransaction(cmds: Executable*) extends FailFastCommandSequence {
+class CmdTransaction(cmds: Executable*) extends FailFastCmdSeq {
 
   override def execute(implicit executor: Executor) =
-    ResultSequence(results = executeWithUnexecuteOnFault(cmds))
+    ResultSeq(results = executeAndUnexecuteIfFailed(cmds))
 
-  private def executeWithUnexecuteOnFault(cmds: Seq[Executable])(implicit executor: Executor) = {
+  private def executeAndUnexecuteIfFailed(cmds: Seq[Executable])(implicit executor: Executor) = {
     val results = failFastExecute(cmds)
     results ++ unexecuteIfFailed(results)
   }
 
   private def unexecuteIfFailed(results: Seq[Result])(implicit executor: Executor) =
-    if (ResultSequence(results).failed)
+    if (ResultSeq(results).failed)
       unexecuteSucceededCommands(results)
     else
       Nil
 
   private def unexecuteSucceededCommands(results: Seq[Result])(implicit executor: Executor) = {
-    val unexecuteSeq = CommandSequence(succeededCommands(results): _*)
+    val unexecuteSeq = CmdSeq(succeededCommands(results): _*)
     unexecuteSeq.unexecute.map(_.results).getOrElse(Nil)
   }
 
@@ -30,7 +30,7 @@ class CommandTransaction(cmds: Executable*) extends FailFastCommandSequence {
   }
 }
 
-object CommandTransaction {
-  def apply(cmds: Executable*): CommandTransaction =
-    new CommandTransaction(cmds: _*)
+object CmdTransaction {
+  def apply(cmds: Executable*): CmdTransaction =
+    new CmdTransaction(cmds: _*)
 }

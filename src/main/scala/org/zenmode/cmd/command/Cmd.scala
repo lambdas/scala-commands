@@ -3,12 +3,12 @@ package org.zenmode.cmd.command
 import org.zenmode.cmd.executor.{Executor, LocalExecutor}
 import org.zenmode.cmd.result.Result
 
-case class Command(
+case class Cmd(
   appPath:      String,
   args:         Iterable[String]    = Nil,
   workDir:      String              = LocalExecutor.currentDir,
   env:          Map[String, String] = Map.empty,
-  unexecuteCmd: Option[Command]     = None
+  unexecuteCmd: Option[Cmd]     = None
 ) extends Executable {
 
   override def execute(implicit executor: Executor): Result =
@@ -29,6 +29,6 @@ case class Command(
   def withEnv(additionalEnv: Map[String, String]) =
     copy(env = env ++ additionalEnv)
 
-  def withUnexecute(newUnexecuteCmd: Command) =
+  def withUnexecute(newUnexecuteCmd: Cmd) =
     copy(unexecuteCmd = Some(newUnexecuteCmd))
 }

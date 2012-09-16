@@ -1,12 +1,12 @@
 package org.zenmode.cmd.command
 
 import org.zenmode.cmd.executor.Executor
-import org.zenmode.cmd.result.{Result, ResultSequence}
+import org.zenmode.cmd.result.{Result, ResultSeq}
 
-class FailFastCommandSequence(cmds: Executable*) extends CommandSequence {
+class FailFastCmdSeq(cmds: Executable*) extends CmdSeq {
 
   override def execute(implicit executor: Executor) =
-    ResultSequence(results = failFastExecute(cmds))
+    ResultSeq(results = failFastExecute(cmds))
 
   protected def failFastExecute(cmds: Seq[Executable])(implicit executor: Executor): Seq[Result] =
     if (cmds.nonEmpty)
@@ -21,7 +21,7 @@ class FailFastCommandSequence(cmds: Executable*) extends CommandSequence {
     }
 }
 
-object FailFastCommandSequence {
-  def apply(cmds: Executable*): FailFastCommandSequence =
-    new FailFastCommandSequence(cmds: _*)
+object FailFastCmdSeq {
+  def apply(cmds: Executable*): FailFastCmdSeq =
+    new FailFastCmdSeq(cmds: _*)
 }
