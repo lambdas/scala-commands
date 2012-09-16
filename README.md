@@ -43,6 +43,7 @@ Usually you will execute several commands in a row. In such cases you may want t
 
 Using it is simple and fun:
 
+```scala
     import org.zenmode.cmd.command.{Cmd, FailFastCmdSeq}
 
     # Local executor sends commands to local shell
@@ -59,11 +60,13 @@ Using it is simple and fun:
 
     # All ready for execution
     prepareHomeStructure.execute
+```
 
 ## Collecting results
 
 **Scala Commands** carefully collects results of all your commands, so you could fully manage execution flow. After command or sequence executed, library provides you with a `Result` instance. Let's inspect it:
 
+```scala
     # Executing some command
     val result = cmd.execute
 
@@ -86,9 +89,11 @@ Using it is simple and fun:
 
     # Errors goes to stderr
     val errors = result.stderrAsString
+```
 
 After sequence executed, you got `ResultSeq` which contains results from each of commands, unbelievable!
 
+```scala
     # Executing some sequence
     val results = seq.execute
 
@@ -103,11 +108,13 @@ After sequence executed, you got `ResultSeq` which contains results from each of
       val out      = result.stdoutAsString
       val errors   = result.stderrAsString
     }
+```
 
 ## Remote executing
 
 **Scala Commands** could execute your commands through SSH transparently, just change executor!
 
+```scala
     import org.zenmode.cmd.executor.SSHExecutor
     import org.zenmode.cmd.command.Cmd
 
@@ -122,6 +129,7 @@ After sequence executed, you got `ResultSeq` which contains results from each of
 
     # Pure magic!
     val docIveForgot = res.stdoutAsString
+```
 
 ## And there is more
 
