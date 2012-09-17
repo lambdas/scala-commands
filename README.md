@@ -44,7 +44,8 @@ Usually you will execute several commands in a row. In such cases you may want t
 Using it is simple and fun:
 
 ```scala
-import org.zenmode.commands.cmd.{Cmd, FailFastCmdSeq}
+import org.zenmode.commands.cmd.Cmd
+import org.zenmode.commands.cmd.seq.FailFastCmdSeq
 
 // Local executor sends commands to local shell
 implicit val executor = new LocalExecutor
