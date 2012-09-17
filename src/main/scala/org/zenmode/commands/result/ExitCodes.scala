@@ -1,4 +1,4 @@
-package org.zenmode.cmd.result
+package org.zenmode.commands.result
 
 object ExitCodes {
   val success = 0

@@ -13,8 +13,8 @@ Coming soon.
 The easiest part, just tell **Scala Commands** what your command is:
 
 ```scala
-import org.zenmode.cmd.executor.LocalExecutor
-import org.zenmode.cmd.command.Cmd
+import org.zenmode.commands.executor.LocalExecutor
+import org.zenmode.commands.cmd.Cmd
 
 // Local executor sends commands to local shell
 implicit val executor = new LocalExecutor
@@ -44,7 +44,7 @@ Usually you will execute several commands in a row. In such cases you may want t
 Using it is simple and fun:
 
 ```scala
-import org.zenmode.cmd.command.{Cmd, FailFastCmdSeq}
+import org.zenmode.commands.cmd.{Cmd, FailFastCmdSeq}
 
 // Local executor sends commands to local shell
 implicit val executor = new LocalExecutor
@@ -115,8 +115,8 @@ results.map { result =>
 **Scala Commands** could execute your commands through **SSH** transparently, just change executor!
 
 ```scala
-import org.zenmode.cmd.executor.SSHExecutor
-import org.zenmode.cmd.command.Cmd
+import org.zenmode.commands.executor.SSHExecutor
+import org.zenmode.commands.cmd.Cmd
 
 // As easy as change one line
 implicit val executor = new SSHExecutor("my-pc.at-work.com", "paul", "password")

@@ -1,4 +1,4 @@
-package org.zenmode.cmd.util
+package org.zenmode.commands.util
 
 import sys.process.ProcessLogger
 

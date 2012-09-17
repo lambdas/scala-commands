@@ -1,4 +1,4 @@
-package org.zenmode.cmd.result
+package org.zenmode.commands.result
 
 case class SingleResult(
   exitCode: Int,

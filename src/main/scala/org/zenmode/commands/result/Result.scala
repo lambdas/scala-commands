@@ -1,4 +1,4 @@
-package org.zenmode.cmd.result
+package org.zenmode.commands.result
 
 trait Result {
   def exitCode: Int

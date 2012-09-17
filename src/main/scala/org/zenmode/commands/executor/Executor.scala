@@ -1,6 +1,6 @@
-package org.zenmode.cmd.executor
+package org.zenmode.commands.executor
 
-import org.zenmode.cmd.result.Result
+import org.zenmode.commands.result.Result
 
 trait Executor {
   def execute(

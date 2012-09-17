@@ -1,9 +1,9 @@
-package org.zenmode.cmd.executor
+package org.zenmode.commands.executor
 
 import sys.process.{Process, ProcessBuilder}
 import java.io.File
-import org.zenmode.cmd.util.SimpleProcessLogger
-import org.zenmode.cmd.result.SingleResult
+import org.zenmode.commands.util.SimpleProcessLogger
+import org.zenmode.commands.result.SingleResult
 
 class LocalExecutor extends Executor {
 

@@ -1,4 +1,4 @@
-package org.zenmode.cmd.executor
+package org.zenmode.commands.executor
 
 import org.scalatest.{ParallelTestExecution, FunSuite}
 import org.scalatest.matchers.ShouldMatchers
