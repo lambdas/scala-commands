@@ -15,23 +15,27 @@ class CmdSeq(cmds: Executable*) extends Executable {
     Some(ResultSeq(unexecuteInReverse))
 
   /** Override and return false to stop execution */
-  protected def onCmdExecuted(result: Result): Boolean =
+  protected def onCmdExecuted(result: Result)
+                             (implicit executor: Executor) =
     true
 
   /** Override and modify results to your needs */
-  protected def onSeqExecuted(results: ResultSeq)(implicit executor: Executor): ResultSeq =
+  protected def onSeqExecuted(results: ResultSeq)
+                             (implicit executor: Executor) =
     results
 
   private def executeWithHooks(implicit executor: Executor) =
     executeCmdsWithHooks(cmds)
 
-  private def executeCmdsWithHooks(cmds: Seq[Executable])(implicit executor: Executor): Seq[Result] =
+  private def executeCmdsWithHooks(cmds: Seq[Executable])
+                                  (implicit executor: Executor): Seq[Result] =
     if (cmds.nonEmpty)
       executeNonEmptyCmdsWithHooks(cmds)
     else
       Nil
 
-  private def executeNonEmptyCmdsWithHooks(cmds: Seq[Executable])(implicit executor: Executor): Seq[Result] =
+  private def executeNonEmptyCmdsWithHooks(cmds: Seq[Executable])
+                                          (implicit executor: Executor): Seq[Result] =
     cmds.head.execute(executor) match {
       case res if !onCmdExecuted(res) => Seq(res)
       case res => Seq(res) ++ executeCmdsWithHooks(cmds.tail)

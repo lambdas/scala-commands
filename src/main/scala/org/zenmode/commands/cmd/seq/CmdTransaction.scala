@@ -6,16 +6,19 @@ import org.zenmode.commands.cmd.Executable
 
 class CmdTransaction(cmds: Executable*) extends FailFastCmdSeq(cmds: _*) {
 
-  override protected def onSeqExecuted(results: ResultSeq)(implicit executor: Executor) =
+  override protected def onSeqExecuted(results: ResultSeq)
+                                      (implicit executor: Executor) =
     results ++ unexecuteIfFailed(results)
 
-  private def unexecuteIfFailed(results: ResultSeq)(implicit executor: Executor) =
+  private def unexecuteIfFailed(results: ResultSeq)
+                               (implicit executor: Executor) =
     if (results.failed)
       unexecuteSucceededCommands(results)
     else
       ResultSeq(Nil)
 
-  private def unexecuteSucceededCommands(results: ResultSeq)(implicit executor: Executor) = {
+  private def unexecuteSucceededCommands(results: ResultSeq)
+                                        (implicit executor: Executor) = {
     val unexecuteSeq = CmdSeq(succeededCommands(results): _*)
     ResultSeq(unexecuteSeq.unexecute.map(_.results).getOrElse(Nil))
   }
